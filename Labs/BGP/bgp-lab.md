@@ -12,7 +12,6 @@ Before beginning the lab, take some time to think about these questions:
 In this lab, you'll practice configuring and verifying eBGP relationships between neighbor routers and advertising summarized routes.
 
 
-
 ## Lab Instructions
 Before starting, ensure lab environment has succesfully been implemented. 
 Interfaces should be up and configured with the correct IP addressing schemes. 
@@ -39,8 +38,7 @@ At this point, the BGP process should be running across all routers in the envir
  - What is the BGP state of each BGP neighbor?
 
 2.3 Complete the BGP configuration on R3 to fix the neighbor relationships.
- - HINT: By default, **bgp default ipv-unicast** is enabled... How do we manually configure address family prefix sharing?
-
+ - HINT: By default, **bgp default ipv4-unicast** is enabled... How do we manually initialize an address family and activate a neighbor for a specific shared route?
 2.4 Examine the routing tables once more for R1, R2, and R3.
  - Have we succesfully troubleshooted BGP? How do you know?
 
@@ -50,7 +48,7 @@ In this step, use show commands to examine BGP operation.
 3.1 Examine the contents of the BGP routing table for R1.
   - What does the * at the beginning of an entry indicate?
   - What deos the angle bracket (>) in an entry indicate?
-  - What is the address of the preferred next hop router to reach the 192.168.1.0/27? Why?
+  - What is the address of the preferred next hop router to reach the 192.168.3.0/27? Why?
 
 ### Step 4: Configure route summarization 
 In this step, use summarization to conserve router resources and improve stability.
@@ -62,7 +60,7 @@ In this step, use summarization to conserve router resources and improve stabili
 4.2 Configure R3 to advertise a summary route.
   - The customer has been allocated the entire 192.168.3.0/24 prefix.
   - Ensure only the summarized route is advertised.
-  - Hint: Rembember that R3 must be configured in the IPv4 address family configuration mode.
+  - Hint: Rembember that R3 must be configured in IPv4 address family configuration mode.
 
 4.3 Examine the routing table on R2.
   - Verify that R2 is only recieving aggregate routes from both R1 and R3.
