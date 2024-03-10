@@ -381,18 +381,18 @@ annotations:
     rotation: 0
     text_bold: false
     text_content: |-
-      L5: 10.10.5.1/24
-      L6: 10.10.6.1/24
+      L16: 10.10.16.1/24
+      L6: 10.10.17.1/24
       L ...
-      L11: 10.10.11.1/24
+      L23: 10.10.23.1/24
     text_font: monospace
     text_italic: false
     text_size: 8
     text_unit: pt
     thickness: 1
     type: text
-    x1: 7.99188637233058
-    y1: 204.79513182339835
+    x1: 8.92666536832084
+    y1: 190.77344688354484
     z_index: 27
   - border_color: '#00000000'
     border_style: ''
@@ -536,7 +536,7 @@ nodes:
 
       Current configuration : 3025 bytes
       !
-      ! Last configuration change at 20:21:55 UTC Sun Mar 10 2024
+      ! Last configuration change at 20:43:05 UTC Sun Mar 10 2024
       !
       version 15.9
       service timestamps debug datetime msec
@@ -711,7 +711,7 @@ nodes:
 
       Current configuration : 3028 bytes
       !
-      ! Last configuration change at 20:21:57 UTC Sun Mar 10 2024
+      ! Last configuration change at 20:43:09 UTC Sun Mar 10 2024
       !
       version 15.9
       service timestamps debug datetime msec
@@ -886,7 +886,7 @@ nodes:
 
       Current configuration : 3095 bytes
       !
-      ! Last configuration change at 20:21:57 UTC Sun Mar 10 2024
+      ! Last configuration change at 20:43:09 UTC Sun Mar 10 2024
       !
       version 15.9
       service timestamps debug datetime msec
@@ -1064,7 +1064,7 @@ nodes:
 
       Current configuration : 3170 bytes
       !
-      ! Last configuration change at 20:21:57 UTC Sun Mar 10 2024
+      ! Last configuration change at 20:43:08 UTC Sun Mar 10 2024
       !
       version 15.9
       service timestamps debug datetime msec
@@ -1243,9 +1243,9 @@ nodes:
     configuration: |-
       Building configuration...
 
-      Current configuration : 3794 bytes
+      Current configuration : 3896 bytes
       !
-      ! Last configuration change at 20:21:56 UTC Sun Mar 10 2024
+      ! Last configuration change at 20:43:08 UTC Sun Mar 10 2024
       !
       version 15.9
       service timestamps debug datetime msec
@@ -1304,32 +1304,36 @@ nodes:
       !
       !
       !
-      interface Loopback5
-       ip address 10.10.5.1 255.255.255.0
+      interface Loopback16
+       ip address 10.10.16.1 255.255.255.0
        ip ospf network point-to-point
       !
-      interface Loopback6
-       ip address 10.10.6.1 255.255.255.0
+      interface Loopback17
+       ip address 10.10.17.1 255.255.255.0
        ip ospf network point-to-point
       !
-      interface Loopback7
-       ip address 10.10.7.1 255.255.255.0
+      interface Loopback18
+       ip address 10.10.18.1 255.255.255.0
        ip ospf network point-to-point
       !
-      interface Loopback8
-       ip address 10.10.8.1 255.255.255.0
+      interface Loopback19
+       ip address 10.10.19.1 255.255.255.0
        ip ospf network point-to-point
       !
-      interface Loopback9
-       ip address 10.10.9.1 255.255.255.0
+      interface Loopback20
+       ip address 10.10.20.1 255.255.255.0
        ip ospf network point-to-point
       !
-      interface Loopback10
-       ip address 10.10.10.1 255.255.255.0
+      interface Loopback21
+       ip address 10.10.21.1 255.255.255.0
        ip ospf network point-to-point
       !
-      interface Loopback11
-       ip address 10.10.11.1 255.255.255.0
+      interface Loopback22
+       ip address 10.10.22.1 255.255.255.0
+       ip ospf network point-to-point
+      !
+      interface Loopback23
+       ip address 10.10.23.1 255.255.255.0
        ip ospf network point-to-point
       !
       interface GigabitEthernet0/0
@@ -1363,7 +1367,7 @@ nodes:
        router-id 3.3.3.2
        auto-cost reference-bandwidth 1000
        network 10.10.4.0 0.0.1.255 area 2
-       network 10.10.0.0 0.0.15.255 area 2
+       network 10.10.16.0 0.0.7.255 area 2
       !
       ip forward-protocol nd
       !

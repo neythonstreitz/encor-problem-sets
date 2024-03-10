@@ -29,7 +29,11 @@ In this step, configure OSPFv2 on the listed devices, ensuring all local network
     - Advertise all four of SW1's connected interfaces into the appropriate area.
 
 ```
-
+router ospf 100
+    router-id 1.1.1.2
+    auto-cost reference-bandwidth 1000
+    network 10.10.0.0 0.15.255.255 area 1
+exit
 
 ```
 
@@ -40,6 +44,13 @@ In this step, configure OSPFv2 on the listed devices, ensuring all local network
     - Advertise both connected interfaces to the appropriate areas.
 
 ```
+router ospf 100
+    router-id 1.1.1.1
+    auto-cost reference-bandwidth 1000
+    network 10.10.0.0 0.0.0.3 area 1
+    network 172.16.0.0 0.0.0.3 area 0
+exit
+
 
 ```
 
@@ -52,7 +63,15 @@ In this step, configure OSPFv2 on the listed devices, ensuring all local network
     - Ensure a default route to the Internet exists.
 
 ```
+router ospf 100
+    router-id 2.2.2.1
+    auto-cost reference-bandwidth 1000
+    network 172.16.0.0 0.0.0.3 area 0
+    network 172.16.1.0 0.0.0.3 area 0
+    default-information originate
+exit
 
+ip route 0.0.0.0 0.0.0.0 Loopback0
 ```
 
 ### Step 2: Verify the OSPFv2 network has been established.
@@ -60,17 +79,21 @@ In this step, we will verify that the configured OSPF network was correctly impl
 
 2.1 Verify OSPFv2 for SW1
     - Examine the active OSPF interfaces and their assigned areas.
+        - ```show ip ospf interface brief```
     - What is the IP address of the designated router?
+        - 10.10.1.1
     - Examine the neighbor adjacency established by SW1.
+        - ```show ip ospf neighbor```
     - What state is the neighbor adjacency in?
+        - FULL
 
-2.2 Verify OSPFv2 for R1
+2.2 Verify OSPFv2 for R1 (FOLLOW THE SAME STEPS AS ABOVE!)
     - Examine the active OSPF interfaces and their assigned areas.
     - What is the IP address of the designated router?
     - Examine the neighbor adjacency established by R1.
     - What state is the neighbor adjacency in?
 
-2.3 Verify OSPFv2 for R2
+2.3 Verify OSPFv2 for R2 (FOLLOW THE SAME STEPS AS ABOVE)
     - Examine the active OSPF interfaces and their assigned areas.
     - What is the IP address of the designated router?
     - Examine the neighbor adjacency established by R1.
@@ -82,13 +105,27 @@ In this step, we will use route summarization on R3 to minimize the routes being
 
 3.1 Calculate the OSPFv2 summary route
     - Identify all Loopback addresses (representing networks) currently being shared into OSPF.
+        - 10.10.16.0/24 -> 10.10.23.0/24 (8 networks total)
     - Starting from the left, how many binary bits match across all networks?
+        - 21 bits match. 
     - Use the above number to calculate the new subnet mask, along with the network address.
-    - Repeat this process with the connected interfaces (10.0.4.0/30 and 10.0.5.0/30).
+        - Since 21 bits match, we'll want a /21 network meaning the subnet mask is 255.255.248.0 and the network address is 10.0.16.0.
 
 3.2 Advertise the summarized routes.
     - Configure the new summary route for the Loopback interfaces.
-    - Configure the new summary route for the connected interfaces.
+
+```
+router ospf 100
+    area 2 range 10.10.16.0 255.255.248.0 cost 65
+```
 
 3.3 Verify route summarization
-    - Examine the routing table of 
+    - Examine the routing table of R3.
+        - ```show ip route ospf```
+    - Why was a Null0 destination created?
+        - To prevent loops when traffic is sent within the summarized range but not actually a connected network. Instead, we just drop it.
+    - Examine the routing table of R2.
+        - ```show ip route ospf```
+    - Are we only recieving the summarized route or all individual Loopbacks?
+        - Only the summary route!
+
