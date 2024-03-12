@@ -20,19 +20,19 @@ In this step, configure OSPFv2 on the listed devices, ensuring all local network
 1.1 Configure OSPFv2 on D1 (Internal Router)
     - Enable IP routing
     - Manually set the router ID to 1.1.1.2
-    - Set the OSPF cost such that we cam distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
+    - Set the OSPF cost such that we can distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
     - Advertise all four of D1's connected interfaces into the appropriate area.
 
 1.2 Configure OSPFv2 on R1 (Area Border Router)
     - Enable IP routing
     - Manually set the router ID to 1.1.1.1
-    - Set the OSPF cost such that we cam distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
+    - Set the OSPF cost such that we can distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
     - Advertise both connected interfaces to the appropriate areas.
 
 1.3 Configure OSPFv2 on R2 (Autonomous System Boundary Router)
     - Enable IP routing
     - Manually set the router ID to 2.2.2.1
-    - Set the OSPF cost such that we cam distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
+    - Set the OSPF cost such that we can distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
     - Advertise both connected interfaces to the appropriate area.
     - Configure R2 to propogate a default route to the Internet.
     - Ensure a default route to the Internet exists.
