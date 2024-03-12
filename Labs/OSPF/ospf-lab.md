@@ -14,14 +14,14 @@ In this lab, you'll practice configuring and examining multi-area OSPFv2.
 ## Lab Instructions
 Before starting, ensure lab environment has succesfully been imported and all devices are on.
 
-### Step 1: Configure OSPF for SW1, R1, and R2
+### Step 1: Configure OSPF for D1, R1, and R2
 In this step, configure OSPFv2 on the listed devices, ensuring all local networks are being shared.
 
-1.1 Configure OSPFv2 on SW1 (Internal Router)
+1.1 Configure OSPFv2 on D1 (Internal Router)
     - Enable IP routing
     - Manually set the router ID to 1.1.1.2
     - Set the OSPF cost such that we cam distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
-    - Advertise all four of SW1's connected interfaces into the appropriate area.
+    - Advertise all four of D1's connected interfaces into the appropriate area.
 
 1.2 Configure OSPFv2 on R1 (Area Border Router)
     - Enable IP routing
@@ -40,10 +40,10 @@ In this step, configure OSPFv2 on the listed devices, ensuring all local network
 ### Step 2: Verify the OSPFv2 network has been established.
 In this step, we will verify that the configured OSPF network was correctly implemented.
 
-2.1 Verify OSPFv2 for SW1
+2.1 Verify OSPFv2 for D1
     - Examine the active OSPF interfaces and their assigned areas.
     - What is the IP address of the designated router?
-    - Examine the neighbor adjacency established by SW1.
+    - Examine the neighbor adjacency established by D1.
     - What state is the neighbor adjacency in?
 
 2.2 Verify OSPFv2 for R1
