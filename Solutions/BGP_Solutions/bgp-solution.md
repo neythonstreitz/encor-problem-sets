@@ -81,11 +81,11 @@ conf t
 
 router bgp 300
 address-family ipv4
-neighbor 10.1.2.2 activate
-neighbor 10.1.3.2 activate
+neighbor 10.1.3.1 activate
+neighbor 10.2.3.1 activate
 neighbor 10.1.3.129 activate
-network 192.168.1.0 mask 255.255.255.224
-network 192.168.1.64 mask 255.255.255.192
+network 192.168.3.0 mask 255.255.255.224
+network 192.168.3.64 mask 255.255.255.192
 
 exit
 ```
