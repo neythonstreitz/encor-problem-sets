@@ -73,4 +73,4 @@ In this step, we will use route summarization on R3 to minimize the routes being
     - Configure the new summary route for the connected interfaces.
 
 3.3 Verify route summarization
-    - Examine the routing table of 
+    - Examine the routing table of R3.
