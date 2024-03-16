@@ -25,7 +25,7 @@ In this step, we'll create VRF instances for the two customers in our environmen
 
 1.3 Verify VRF creation
 
-### Step 2: AssignLoopback and Sub-interface interfaces
+### Step 2: Assign Loopback and Sub-interface interfaces
 
 2.1 Create Loopback0
 - Assign to the Customer_A VRF
