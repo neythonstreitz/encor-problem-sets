@@ -36,7 +36,7 @@ ISP1(config-vrf)# exit
 
 1.3 Verify VRF creation
 ```
-ISP1# show ip vrf
+ISP1# show vrf
   Name                             Default RD            Interfaces
   Customer_A                       <not set>             
   Customer_B                       <not set> 
@@ -52,7 +52,7 @@ We can see the VRFs were created but no interfaces set yet.
 
 ```
 ISP1(config)# int l0
-ISP1(config-if)# ip vrf forwarding Customer_A
+ISP1(config-if)# vrf forwarding Customer_A
 ISP1(config-if)# ip add 1.1.1.1 255.255.255.255
 ISP1(config-if)# exit
 ```
@@ -64,12 +64,12 @@ ISP1(config-if)# exit
 
 ```
 ISP1(config)# int l1
-ISP1(config-if)# ip vrf forwarding Customer_B
+ISP1(config-if)# vrf forwarding Customer_B
 ISP1(config-if)# ip add 2.2.2.2 255.255.255.255
 ISP1(config-if)# exit
 ```
 
-2.3 Create sub-interface e0/3.100
+2.3 Create sub-interface g0/3.100
 - Enable dot1q encapsulation for VLAN 100
 - Assign to the Customer_A VRF
 - Configure with 192.168.0.1/24
@@ -77,12 +77,12 @@ ISP1(config-if)# exit
 
 ```
 ISP1(config)# int g0/3.100
-ISP1(config-subif)# ip vrf forwarding Customer_A
+ISP1(config-subif)# vrf forwarding Customer_A
 ISP1(config-subif)# ip add 192.168.0.1 255.255.255.0
 ISP1(config-subif)# exit
 ```
 
-2.4 Create sub-interface e0/3.200
+2.4 Create sub-interface g0/3.200
 - Enable dot1q encapsulation for VLAN 200
 - Assign to the Customer_B VRF
 - Configure with 192.168.0.1/24
@@ -90,7 +90,7 @@ ISP1(config-subif)# exit
 
 ```
 ISP1(config-subif)# int g0/3.200 
-ISP1(config-subif)# ip vrf forwarding Customer_B
+ISP1(config-subif)# vrf forwarding Customer_B
 ISP1(config-subif)# ip add 192.168.0.1 255.255.255.0
 ISP1(config-subif)# exit
 ```
@@ -98,7 +98,7 @@ ISP1(config-subif)# exit
 2.5 Verify VRF Assignment
 
 ```
-ISP1#show ip vrf
+ISP1#show vrf
   Name                             Default RD            Interfaces
   Customer_A                       <not set>             Lo0
                                                          Gi0/3.100
