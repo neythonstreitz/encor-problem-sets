@@ -28,25 +28,25 @@ In this step, we'll create VRF instances for the two customers in our environmen
 ### Step 2: Assign Loopback and Sub-interface interfaces
 
 2.1 Create Loopback0
-- Assign to the Customer_A VRF
-- Configure with 1.1.1.1/32
+- Assign it to the Customer_A VRF
+- Configure it with the address 1.1.1.1/32
 - Ensure interface is turned on
 
 2.2 Create Loopback1
-- Assign to the Customer_B VRF
-- Configure with 2.2.2.2/32
+- Assign it to the Customer_B VRF
+- Configure it with the address 2.2.2.2/32
 - Ensure interface is turned on
 
 2.3 Create sub-interface e0/3.100
+- Assign it to the Customer_A VRF
 - Enable dot1q encapsulation for VLAN 200
-- Assign to the Customer_A VRF
-- Configure with 192.168.0.1/24
+- Configure it with the address 192.168.0.1/24
 - Ensure interface is turned on
 
 2.4 Create sub-interface e0/3.200
+- Assign it to the Customer_B VRF
 - Enable dot1q encapsulation for VLAN 200
-- Assign to the Customer_B VRF
-- Configure with 192.168.0.1/24
+- Configure it with the address 192.168.0.1/24
 - Ensure interface is turned on
 
 2.5 Verify VRF Assignment
