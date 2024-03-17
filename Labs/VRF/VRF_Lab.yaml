@@ -277,7 +277,6 @@ nodes:
       !
       interface GigabitEthernet0/3
        no ip address
-       shutdown
        duplex auto
        speed auto
        media-type rj45
