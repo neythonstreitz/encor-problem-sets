@@ -55,7 +55,7 @@ We can see the VRFs were created but no interfaces set yet.
 
 ```
 ISP1(config)# int l0
-ISP1(config-if)# vrf forwarding Customer_A
+ISP1(config-if)# ip vrf forwarding Customer_A
 ISP1(config-if)# ip add 1.1.1.1 255.255.255.255
 ISP1(config-if)# exit
 ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
@@ -68,7 +68,7 @@ ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
 
 ```
 ISP1(config)# int l1
-ISP1(config-if)# vrf forwarding Customer_B
+ISP1(config-if)# ip vrf forwarding Customer_B
 ISP1(config-if)# ip add 2.2.2.2 255.255.255.255
 ISP1(config-if)# exit
 ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
@@ -83,9 +83,10 @@ ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
 
 ```
 ISP1(config)# int g0/3.100
-ISP1(config-subif)# vrf forwarding Customer_A
+ISP1(config-subif)# ip vrf forwarding Customer_A
 ISP1(config-subif)# encapsulation dot1q 100 // Make sure you do this step before setting the IP address!
 ISP1(config-subif)# ip add 192.168.0.1 255.255.255.0
+ISP1(config-subif)# no shutdown
 ISP1(config-subif)# exit
 ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
 ```
@@ -99,9 +100,10 @@ ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
 
 ```
 ISP1(config-subif)# int g0/3.200 
-ISP1(config-subif)# vrf forwarding Customer_B
+ISP1(config-subif)# ip vrf forwarding Customer_B
 ISP1(config-subif)# encapsulation dot1q 200 // Make sure you do this step before setting the IP address!
 ISP1(config-subif)# ip add 192.168.0.1 255.255.255.0
+ISP1(config-subif)# no shutdown
 ISP1(config-subif)# exit
 ISP1(config)# do show ip vrf interfaces // Just for some piece of mind!
 ```
