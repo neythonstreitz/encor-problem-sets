@@ -1,5 +1,6 @@
 # Cisco ENCOR v1.1 Practice Labs
-A collection of guided practice labs for the Cisco 350-401 ENCOR v1.1 exam.
+A collection of guided practice labs and solutions for the Cisco 350-401 ENCOR v1.1 exam.
+
 
 
 ## About the exam
@@ -8,9 +9,14 @@ According to Cisco's official **[certification listing](https://learningnetwork.
 
 The exam itself consists of multiple choice, drag & drop, and hands-on lab questions.
 It will behoove you to read the **[exam topics](https://learningnetwork.cisco.com/s/encor-exam-topics)** closely to get a sense of the level of depth required for each topic.
-Topics starting with **Configure**, **Troubleshoot**, or **Verify** are likely to require configuration-level knowledge, whereas **Explain**, for instance, is more likely to appear as a multiple choice or drag & drop question.
-However, keep in mind that while some topics may not show up as labs, you may still encounter configuration files or show commands as part of a multiple choice question.
-That is to say, as much as possible... lab, lab, lab!
+
+ 
+> ### Tip: Verbs matter!
+>
+> Topics starting with **Configure**, **Troubleshoot**, or **Verify** are likely to require configuration-level knowledge, whereas **Explain**, for instance, is more likely to appear as a multiple choice or drag & drop question.
+
+Keep in mind that while some topics may not show up as labs, you may still encounter configuration files or show commands as part of a multiple choice question.
+That is to say, as much as possible... **lab, lab, lab!**
 
 
 ## What's in a lab?
@@ -26,10 +32,31 @@ Each lab contains:
 
 ## How to Use
 These labs are built for Cisco CML v2.6 and assume you have a running instance.
+This is not a trivial assumption, but if you don't have a local instance, consider reserving a free CML instance (as well as many other Cisco solutions) on [Cisco's DevNet Sandbox](https://developer.cisco.com/sandbox.html?ReturnUrl=https://devnetsandbox.cisco.com)!
 
-1. Navigate to your CML server via a web browser.
+### 1. Clone the repository locally via:
+
+    ```git clone https://github.com/neythonstreitz/encor-problem-sets.git```
+
+*Alternatively, you can view the instructions from the Github website and download individual lab .yaml files. Only the .yaml file is necessary for the lab to load in CML, so locally cloning the repo is not required (for now).*
+
+### 2. Navigate to your CML server via a web browser.
+![CML Dashboard Screen](./Images/cml-dashboard-screenshot.png)
+### 3. In the top right, click on ```Import```.
+![CML Import Screen](./Images/cml-import-screenshot.png)
+### 4. Choose your selected lab.yaml file and select ```Import```. Once loaded, press ```Go To Lab```.
+### 5. Within the lab environment, start the lab devices all at once by navigating to ```Lab``` and selecting ```Start Lab```.
+![CML Lab Environment](./Images/cml-startlab-screenshot.png)
+
+*Get some coffee... this step may take a few minutes...*
+### 6. The nodes are ready when a green checkmark appears and the ```Nodes``` pane shows a ```BOOTED``` state for all nodes.
+![CML Nodes Ready](./Images/cml-readylab-screenshot.png)
 
 
+### 7. To open a device console, right click the node and select ```CONSOLE```
+![CML Console](./Images/cml-console-screenshot.png)
 
-To load the topology, upload the selected lab .yaml file and proceed with the instructions for configuration.
+*The device console should appear at the bottom of the screen.*
+
+### 8. Follow the lab instructions and repeat the process for other topics!
 
