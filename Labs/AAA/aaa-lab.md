@@ -24,7 +24,7 @@ sudo hostname PC2
 sudo ifconfig eth0 192.168.1.49 netmask 255.255.255.0
 ```
 
-Verify connectivity by pinging from PC1 and PC2 to R2, and pinging between PC1 and PC2. Careful, the ping command will run continuously if you don't specify a count (-c)!
+Verify connectivity by pinging from PC1 and PC2 to R1, and pinging between PC1 and PC2. Careful, the ping command will run continuously if you don't specify a count (-c)!
 
 ```
 ping -c 4 192.168.1.1

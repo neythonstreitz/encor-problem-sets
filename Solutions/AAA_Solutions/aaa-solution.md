@@ -112,7 +112,7 @@ line con 0
 - What versions of SSH are enabled by default? Restrict the device to only support SSHv2. 
     - By default we should be in SSH v1.99 which means we can use both SSHv1 and SShv2. We can change this by running: ```ip ssh version 2```.
 - Configure SSH such that the authentication time-out is only 60 seconds or less and a max of 2 attempts is allowed.
-    - ```R1(config)#ip ssh time-out 30```
+    - ```R1(config)#ip ssh time-out 60```
       ```R1(config)#ip ssh authentication-retries 2```
 
 2.2 Configure the VTY Lines on R1
