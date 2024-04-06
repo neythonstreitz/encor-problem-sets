@@ -36,7 +36,7 @@ This is not a trivial assumption, but if you don't have a local instance, consid
 
 ### 1. Clone the repository locally via:
 
-    ```git clone https://github.com/neythonstreitz/encor-problem-sets.git```
+    git clone https://github.com/neythonstreitz/encor-problem-sets.git
 
 *Alternatively, you can view the instructions from the Github website and download individual lab .yaml files. Only the .yaml file is necessary for the lab to load in CML, so locally cloning the repo is not required (for now).*
 
@@ -59,4 +59,24 @@ This is not a trivial assumption, but if you don't have a local instance, consid
 *The device console should appear at the bottom of the screen.*
 
 ### 8. Follow the lab instructions and repeat the process for other topics!
+---
 
+### Saving and Restarting Lab Progress
+
+If you plan on spinning down your CML topology (or are using a reserved sandbox), make sure to follow these steps to preserve your progress:
+
+1. Copy the running configuration of all devices to their startup configuration
+    - Ex: ```R1# copy run start```
+2. Under the ```NODES``` panel, select all nodes and ```EXTRACT CONFIGS```
+    - This will pull the configs. from the devices and save them to the lab .yaml file
+3. Under the ```LAB``` tab, select ```Download Lab```
+    - A lab.yaml file should download to your computer.
+4. When importing the in-progress lab, remember to use your downloaded .yaml file (not the one from this repo)
+    - Make sure to write down where you stopped so you can pick back up seamlessly!
+
+Need to start a lab over?
+If you have NOT saved your progress (as shown above) you can simply restart all the nodes:
+- Under ```LAB``` -> Select ```Stop Lab``` -> Wait for nodes to stop -> Select ```Start Lab```
+
+Alternatively, if you have modified the startup configs of any of your devices, the nodes will use the modified startup config instead of the original pre-configured startup. 
+In that case, simply delete the current lab and re-import a fresh lab .yaml file from this repo.
