@@ -492,6 +492,7 @@ nodes:
       # configurable user account
       USERNAME=cisco
       PASSWORD=cisco
+      ifconfig eth0 192.168.1.50 netmask 255.255.255.0
     cpu_limit: null
     cpus: null
     data_volume: null
@@ -516,6 +517,8 @@ nodes:
       # configurable user account
       USERNAME=cisco
       PASSWORD=cisco
+      # Set IP Address
+      ifconfig eth0 192.168.1.49 netmask 255.255.255.0
     cpu_limit: null
     cpus: null
     data_volume: null
