@@ -39,7 +39,7 @@ In this step, we'll create VRF instances for the two customers in our environmen
 
 2.3 Create sub-interface g0/3.100
 - Assign it to the Customer_A VRF
-- Enable dot1q encapsulation for VLAN 200
+- Enable dot1q encapsulation for VLAN 100
 - Configure it with the address 192.168.0.1/24
 - Ensure interface is turned on
 
