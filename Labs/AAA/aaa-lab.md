@@ -49,11 +49,11 @@ In this step, we'll practice configuring passwords of different encryption types
 
 #### 1.2 Verify console line login
 - [ ] Logout of the console. Attempt to re-enter the console with the configured password.
-- [ ] Check the running config., how is the password saved? Are we happy with this?
+- [ ] Check the running config. How is the password saved? Are we happy with this?
 
 #### 1.3 Encrypt all plain text passwords
 - [ ] Use one command to obscure all clear-text passwords.
-- [ ] Re-check the running config., what happened to the console password we created?
+- [ ] Re-check the running config. What happened to the console password we created?
 - [ ] What type of encryption are we using?
 - [ ] Copy the encrypted password and enter it into this [website](https://packetlife.net/toolbox/type7/).
 - [ ] Evaluate the efficacy of the encryption you performed.
@@ -64,7 +64,7 @@ In this step, we'll practice configuring passwords of different encryption types
 
 #### 1.5 Verify a local user account
 - [ ] Logout of the console. Attempt to enter the console with the new user account.
-- [ ] Examine the running config., what does the local user we created look like?
+- [ ] Examine the running config. What does the local user we created look like?
 - [ ] Copy the encrypted password and enter it into this [webiste](https://www.ifm.net.nz/cookbooks/cisco-ios-enable-secret-password-cracker.html).
 - [ ] Evaluate the efficacy of the encryption you performed.
 
@@ -74,7 +74,7 @@ In this step, we'll practice configuring passwords of different encryption types
 
 #### 1.7 Verify security enhancements
 - [ ] Logout of the console. Attempt to login to the console and enter privileged Exec mode using the configured password.
-- [ ] Examine the running config., what does the local user and enable password we created look like?
+- [ ] Examine the running config. What does the local user and enable password we created look like?
 - [ ] Take a moment to scan the [NSAs Cisco Password Best Practices guide](https://media.defense.gov/2022/Feb/17/2002940795/-1/-1/1/CSI_CISCO_PASSWORD_TYPES_BEST_PRACTICES_20220217.PDF).
 - [ ] Evaluate the efficacy of the encryption you performed. 
 
