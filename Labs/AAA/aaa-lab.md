@@ -109,16 +109,16 @@ Feel free to follow these steps while connected to R1 via SSH or directly on its
 
 3.1 Enable AAA for login
 - [ ] Create a new AAA model.
-- [ ] Ensure the method is applied to ALL possible login vectors (console, VTY, etc.).
-- [ ] Use the default method list with the enable password from Step 1.5 as Method 1.
+- [ ] Ensure the method is enforced on ALL possible login vectors (console, VTY, etc.).
+- [ ] Set the default method list to use the enable password from Step 1.5 as Method 1.
 - [ ] Verify configuration by exiting and re-entering the console.
 
-3.3 Create a named method list for remote access login
+3.2 Create a named method list for remote access login
 - [ ] Name the method list VTY-AUTH.
 - [ ] Use only the local user database for authentication.
 - [ ] Apply the method list to the vty lines (0 - 15).
 
-3.4 Verify AAA operation
+3.3 Verify AAA operation
 - [ ] Attempt to SSH from PC1 to R1.
 
 ### Step 4: Examine a AAA Model
