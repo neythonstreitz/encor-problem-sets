@@ -1458,10 +1458,12 @@ nodes:
   - boot_disk_size: null
     configuration: |-
       # this is a shell script which will be sourced at boot
-      hostname inserthostname-here
+      hostname User1
       # configurable user account
       USERNAME=cisco
       PASSWORD=cisco
+      # Set IP Address
+      ifconfig eth3 10.10.1.10 netmask 255.255.0.0
     cpu_limit: null
     cpus: null
     data_volume: null

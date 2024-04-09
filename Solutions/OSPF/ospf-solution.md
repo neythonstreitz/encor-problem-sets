@@ -28,6 +28,10 @@ Additionally, this lab includes route summarization.
 ## Preliminary Questions
 Before beginning the lab, take some time to think about these questions:
 - What are the primary differences between OSPFv2 and OSPFv3?
+    > 
+    >
+    >
+    >
 - How do broadcast networks differ from P2P and P2MP networks in OSPF operation?
 - What purpose do areas serve in OSPF design?
 - How does OSPF calculate path cost?
@@ -117,7 +121,7 @@ Remember not to touch R3 or D2 just yet!
 - [x] Manually set the router ID to 2.2.2.1
 - [x] Set the OSPF cost such that we can distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
 - [x] Enable OSPF on R2s G0/1 and G0/2 interface using a single ```network``` statement.
-- [x] Enable OSPF on R2s Loopback0 interface using either method.
+- [x] Enable OSPF on R2s Loopback0 interface as a ```point-to-point``` network using either method.
 - [x] Configure R2 to propogate a default route to the Internet.
 
 >```
@@ -130,6 +134,7 @@ Remember not to touch R3 or D2 just yet!
 > R2(config-router)# exit
 > R2(config)# interface l0 
 > R2(config-if)# ip ospf 100 area 0
+> R2(config-if)# ip ospf network point-to-point
 >```
 > Because R2 is advertising a default route to the "Internet", it is considered an Autonomous System Boundary Router (ASBR).
 > You can think of the ASBR as the exit and entry point for our OSPF network.
@@ -153,6 +158,7 @@ Remember not to touch R3 or D2 just yet!
 >
 > We finish the configuration by enabling OSPF on the Loopback0 interface by configuring it directly. 
 > Unless explicitly stated, its really up to you what method you prefer!
+> We also modify the OSPF network type to be a point-to-point connection using the ```ip ospf network``` command.
 
 
 ### Step 2: Verify the OSPFv2 network has been established.
@@ -167,8 +173,8 @@ In this step, we will verify that the configured OSPF network was correctly impl
 > We can examine the active OSPF interfaces using the ```show ip ospf interface brief``` command.
 > ```
 > Interface    PID   Area            IP Address/Mask    Cost  State Nbrs F/C
-> Gi0/3        100   1               10.10.1.1/24       1     DR    0/0
 > Gi0/0        100   1               10.10.0.2/30       1     DR    1/1
+> Gi0/3        100   1               10.10.1.1/24       1     DR    0/0
 >```
 > As show above, the G0/0 and G0/3 interfaces are actively involved in the OSPF process. 
 > 
@@ -197,7 +203,7 @@ In this step, we will verify that the configured OSPF network was correctly impl
 
 #### 2.2 Verify OSPFv2 for R1
 - [x] Examine the active OSPF interfaces and their assigned areas.
-- [x] Is R1 a DR in any of its segments? Why?
+- [x] Is R1 a DR in any of its segments? Why? (see solution if stuck!)
 - [x] Examine the neighbor adjacencies established by R1.
 - [x] What state are the neighbor adjacencies in?
 
@@ -227,6 +233,7 @@ In this step, we will verify that the configured OSPF network was correctly impl
 > Both neighbor adjacencies are in the full state and we can see that both of our neighbors are the DRs in their respective segments.
 
 #### 2.3 Verify OSPFv2 for R2
+- [x] Before proceeding, ensure that the OSPF process has been restarted on both R1 and R2.
 - [x] Examine the active OSPF interfaces and their assigned areas.
 - [x] Is R2 a DR in any of its segments? Why?
 - [x] Examine the neighbor adjacencies established by R1.
@@ -234,16 +241,17 @@ In this step, we will verify that the configured OSPF network was correctly impl
 - [x] Verify the gateway of last resort is succesfully being advertised.
 
 > We can examine the active OSPF interfaces using the ```show ip ospf interface brief``` command.
-> *The following table assumes you restarted the OSPF process in the previous step.*
+> *The following show commands assume you restarted the OSPF process prior to viewing.*
 >```
 > Interface    PID   Area            IP Address/Mask    Cost  State Nbrs F/C
-> Lo0          100   0               192.168.200.225/27 1     LOOP  0/0
+> Lo0          100   0               192.168.200.225/27 1     P2P  0/0
 > Gi0/2        100   0               172.16.1.1/30      1     DR    1/1
 > Gi0/1        100   0               172.16.0.1/30      1     DR    1/1
 >```
 > As we can see, all three interfaces are succesfully enabled with OSPF.
 > R2 serves as the DR for two of its segments.
-> Note that we are only using the Loopback interface to simulate an external network, so don't pay to much mind to the LOOP state.
+> Because we set the Loopback interface as a part of an OSPF P2P network, no DR/BDR election takes place.
+> We can see this indicated by the P2P state.
 > 
 > Moving on to the neighbor adjacencies via ```show ip ospf neighbor``` we have,
 >```
@@ -259,26 +267,25 @@ In this step, we will verify that the configured OSPF network was correctly impl
 > Gateway of last resort is 192.168.200.255 to network 0.0.0.0
 >
 > S*    0.0.0.0/0 [1/0] via 192.168.200.255, Loopback0
->                is directly connected, Loopback0
 >```
 > The first entry of our routing table indicates that there is a default gateway on the router.
-> The next entry indicates that the 0.0.0.0 entry towards Loopback0 is the candidate default route.
+> The next entry indicates that the static 0.0.0.0 entry towards Loopback0 is the candidate default route.
 >
 > Jumping into the routing table of R1, we see that the default route is being succesfully shared.
 >```
->Gateway of last resort is 172.16.0.1 to network 0.0.0.0
+> Gateway of last resort is 172.16.0.1 to network 0.0.0.0
 >
->O*E2  0.0.0.0/0 [110/1] via 172.16.0.1, 00:04:09, GigabitEthernet0/1
->      10.0.0.0/8 is variably subnetted, 12 subnets, 3 masks
+> O*E2  0.0.0.0/0 [110/1] via 172.16.0.1, 00:00:34, GigabitEthernet0/1
 >```
-> The O indicates that the route was learned via OSPF, the asterisk that it is a candidate default route, and the E2 indicates it is an external route outside of the OSPF network.
+> The O indicates that the route was learned via OSPF, the asterisk that it is a candidate default route, and the E2 indicates it is an external route outside of the OSPF network i.e. to the Internet.
 > Nice!
 
 ### Step 3: Troubleshooting the OSPFv2 network
 In this step, we'll identify and fix issues with the OSPF process on R3.
-Note that some pre-configurations were already made on R3 and D2, and minus the troubleshooting, OSPF should be running normally.
+Note that some pre-configurations were already made on R3 and D2, so initial OSPF setup is not needed.
+Just troubleshooting!
 
-#### 3.1 Identify the Issues on R3
+#### 3.1 Identify the issues on R3
 - [x] Examine the active OSPF interfaces and their assigned areas.
 - [x] What state are the OSPF neighbor adjacencies in? Why?
 - [x] Are all neighbor adjacencies that should be formed, up?
@@ -289,17 +296,181 @@ Note that some pre-configurations were already made on R3 and D2, and minus the 
 > Gi0/2        100   0               172.16.1.2/30      1     DROTH 1/1
 > Gi0/0        100   2               10.10.4.1/30       1     DR    0/0
 >```
+> Both the relevant interfaces seem to be involved in the OSPF process.
+> However, we can see that the G0/2 interface is in a ```DROTHER``` state.
+> Typically, this state is used when a device is not selected as the DR or BDR, however, in the 172.16.1.0/30 segment that G0/2 is a part of, there is only two devices.
+> That is to say, G0/2 should either be a DR or a BDR, and not a DROTHER!
+> In fact, with a ```router-id``` of 3.3.3.1, R3 should be the DR and R2 should be the BDR.
+> 
+> Jumping into the neighbor adjacency table we see that,
+>```
+> Neighbor ID     Pri   State           Dead Time   Address         Interface
+> 2.2.2.1           1   FULL/DR         00:00:33    172.16.1.1      GigabitEthernet0/2
+>```
+> Only one neighbor adjacency is up, even though there should be two.
+> Interestingly, its the adjacency going towards R2... so there seems to be something broken with both of our interfaces OSPF processes!
 
 
 #### 3.2 Fix the OSPF process on R3
-- [ ] Configure R3 to participate in the OSPF process (there is no need to modify the OSPF process itself).
+- [x] Configure R3s interfaces to succesfully participate in the OSPF process (there is no need to modify the OSPF process itself).
+
+> Let's start by fixing the G0/2 interface going upstream.
+> We can get more detail on the OSPF process on the interface using the, ```show ip ospf interface g0/2``` command.
+>```
+> GigabitEthernet0/2 is up, line protocol is up 
+>   Internet Address 172.16.1.2/30, Area 0, Attached via Interface Enable
+>   Process ID 100, Router ID 3.3.3.1, Network Type BROADCAST, Cost: 1
+>   Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+>         0           1         no          no            Base
+>   Enabled by interface config, including secondary ip addresses
+>   Transmit Delay is 1 sec, State DROTHER, Priority 0
+>   Designated Router (ID) 2.2.2.1, Interface address 172.16.1.1
+>   No backup designated router on this network
+>   Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+>     oob-resync timeout 40
+>     Hello due in 00:00:07
+>```
+> Notice that the priority is set to 0.
+> When an interface has their OSPF priority set to 0, it does not participate in DR/BDR elections.
+> This is why the state is set to ```DROTHER``` even though it should be the DR of this segment.
+> Alternatively, we can look through our running configuration to come to a similar conclusion.
+>```
+> interface GigabitEthernet0/2
+>  ip address 172.16.1.2 255.255.255.252
+>  ip ospf priority 0
+>  ip ospf 100 area 0
+>  duplex auto
+>  speed auto
+>  media-type rj45
+>```
+>
+> Let's fix this by going into interface configuration mode and resetting the priority to 1.
+> Don't forget to restart the OSPF process once completed on both R3 and R2.
+>```
+> R3(config)# interface g0/2
+> R3(config-if)# ip ospf priority 1
+> R3(config-if)# exit
+> R3(config)# exit
+> R3# clear ip ospf process 
+>```
+> ```
+> R2# clear ip ospf process
+>```
+> We now run the same ```show ip ospf int br``` command on R3.
+>```
+> Interface    PID   Area            IP Address/Mask    Cost  State Nbrs F/C
+> Gi0/2        100   0               172.16.1.2/30      1     DR    1/1
+> Gi0/0        100   2               10.10.4.1/30       1     DR    0/0
+>```
+> The entry for G0/2 now looks like is finally functioning as R3 is the DR for the segment, which is what we suspected.
+> However, there is still the issue of only one neighbor adjacency being up.
+>```
+> R3# show ip ospf neighbor
+>
+> Neighbor ID     Pri   State           Dead Time   Address         Interface
+> 2.2.2.1           1   FULL/BDR        00:00:34    172.16.1.1      GigabitEthernet0/2
+>```
+> Let's investigate what may be wrong with the G0/0 interface.
+> ```
+> R3# show ip ospf interface g0/0
+> GigabitEthernet0/0 is up, line protocol is up 
+>   Internet Address 10.10.4.1/30, Area 2, Attached via Interface Enable
+>   Process ID 100, Router ID 3.3.3.1, Network Type BROADCAST, Cost: 1
+>   Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+>         0           1         no          no            Base
+>   Enabled by interface config, including secondary ip addresses
+>   Transmit Delay is 1 sec, State DR, Priority 1
+>   Designated Router (ID) 3.3.3.1, Interface address 10.10.4.1
+>   No backup designated router on this network
+>   Timer intervals configured, Hello 20, Dead 80, Wait 80, Retransmit 5
+>     oob-resync timeout 80
+>     Hello due in 00:00:05
+>```
+> We can see that the network type is set to Broadcast.
+> By default, an OSPF Broadcast network type has 10s HELLO timers and 4xHELLO for the DEAD timers (40s).
+> We can confirm this by looking at the previous ```show ip ospf interface g0/2``` output.
+> We'll need to fix the HELLO timer to match the default.
+>```
+> R3(config)# interface g0/0
+> R3(config-if)# ip ospf hello-interval 10
+>```
+> Alternatively, we could've issued the ```no ip ospf hello-interval 20``` to remove the configuration and restore it to the default of 10.
 
 #### 3.3. Verify OSPFv2 for R3
-- [ ] Examine the active OSPF interfaces and their assigned areas.
-- [ ] Examine the neighbor adjacencies established by R3.
+- [x] Examine the neighbor adjacencies established by R3.
+> With the timer fixed, we should now have both adjacencies working!
+> Notice that the R3 node is the DR for the segment towards R2 and towards D2.
+> However, since D2 has a ```router-id``` that's higher than R3s, in theory it should be the DR.
+> Non-preemption at it again!
+> Feel free to clear the ospf process on both R2, R3, and D2 if you want it to match theory.
+
+>```
+> Neighbor ID     Pri   State           Dead Time   Address         Interface
+> 2.2.2.1           1   FULL/BDR        00:00:39    172.16.1.1      GigabitEthernet0/2
+> 3.3.3.2           1   FULL/BDR        00:00:38    10.10.4.2       GigabitEthernet0/0
+>```
+> We can also examine the routing table to ensure that the routes we expect to be shared are being shared.
+>```
+> R3#show ip route
+> Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+>        D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+>        N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+>        E1 - OSPF external type 1, E2 - OSPF external type 2
+>        i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+>        ia - IS-IS inter area, * - candidate default, U - per-user static route
+>        o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+>        a - application route
+>        + - replicated route, % - next hop override, p - overrides from PfR
+> 
+> Gateway of last resort is 172.16.1.1 to network 0.0.0.0
+> 
+> O*E2  0.0.0.0/0 [110/1] via 172.16.1.1, 00:11:43, GigabitEthernet0/2
+>       10.0.0.0/8 is variably subnetted, 12 subnets, 3 masks
+> O IA     10.10.0.0/30 [110/3] via 172.16.1.1, 00:12:32, GigabitEthernet0/2
+> O IA     10.10.1.0/24 [110/4] via 172.16.1.1, 00:12:32, GigabitEthernet0/2
+> C        10.10.4.0/30 is directly connected, GigabitEthernet0/0
+> L        10.10.4.1/32 is directly connected, GigabitEthernet0/0
+> O        10.10.16.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.17.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.18.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.19.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.20.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.21.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.22.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+> O        10.10.23.0/24 [110/2] via 10.10.4.2, 00:12:32, GigabitEthernet0/0
+>       172.16.0.0/16 is variably subnetted, 3 subnets, 2 masks
+> O        172.16.0.0/30 [110/2] via 172.16.1.1, 00:12:32, GigabitEthernet0/2
+> C        172.16.1.0/30 is directly connected, GigabitEthernet0/2
+> L        172.16.1.2/32 is directly connected, GigabitEthernet0/2
+>       192.168.200.0/27 is subnetted, 1 subnets
+> O        192.168.200.224 [110/2] via 172.16.1.1, 00:12:32, GigabitEthernet0/2
+>```
+> Dang that's a lot of routes!
+> Looks like R3 is recieving all the connected Loopbacks from D2, the segment between User1 and D1, the segment between D1 and R1, and the segment between R1, and R2.
+> Everything should be good, but let's ping to truly verify connectivity.
 
 
-### Step 4: Route Summarization
+#### 3.4 Verify network connectivity 
+- [x] Ping from User1 to any of the Loopback "networks" connected to D2.
+    - Use ```ping -c n ip-address``` to limit the ping to n attempts on Alpine Linux.
+>```
+> User1:~$ ping -c 4 10.10.17.1
+> PING 10.10.17.1 (10.10.17.1): 56 data bytes
+> 64 bytes from 10.10.17.1: seq=0 ttl=42 time=5.473 ms
+> 64 bytes from 10.10.17.1: seq=1 ttl=42 time=5.579 ms
+> 64 bytes from 10.10.17.1: seq=2 ttl=42 time=6.512 ms
+> 64 bytes from 10.10.17.1: seq=3 ttl=42 time=4.533 ms
+> 
+> --- 10.10.17.1 ping statistics ---
+> 4 packets transmitted, 4 packets received, 0% packet loss
+> round-trip min/avg/max = 4.533/5.524/6.512 ms
+>```
+> In this example we pinged the 10.10.17.1 Loopback connected "network".
+> Based on the results of the ping, we have two-way reachability.
+> Looks like our OSPF network is up and running... great job!
+
+
+### Step 4: Route Summarization (WORK IN PROGRESS)
 In this step, we will use route summarization on R3 to minimize the routes being shared.
 
 3.1 Calculate the OSPFv2 summary route

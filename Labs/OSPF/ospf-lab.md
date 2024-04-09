@@ -49,11 +49,11 @@ Remember not to touch R3 or D2 just yet!
 - [ ] Enable OSPF on both connected interfaces with the appropriate area **WITHOUT** using the ```network``` command.
 - [ ] Set any access ports to NOT advertise OSPF Hello packets.
 
-
+ß
 #### 1.2 Configure OSPFv2 on R1 (Area Border Router)
 - [ ] Manually set the router ID to 1.1.1.1
 - [ ] Set the OSPF cost such that we can distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
-- [ ] Advertise all of D1's connected interfaces into the appropriate area.
+- [ ] Advertise all of R1's connected interfaces into the appropriate area(s) using the ```network``` command.
 
 
 #### 1.3 Configure OSPFv2 on R2 (Autonomous System Boundary Router)
@@ -61,7 +61,7 @@ Remember not to touch R3 or D2 just yet!
 - [ ] Manually set the router ID to 2.2.2.1
 - [ ] Set the OSPF cost such that we can distinguish between Gigabit Ethernet and Fast Ethernet interfaces.
 - [ ] Enable OSPF on R2s G0/1 and G0/2 interface using a single ```network``` statement.
-- [ ] Enable OSPF on R2s Loopback0 interface using either method.
+- [ ] Enable OSPF on R2s Loopback0 interface as a ```point-to-point``` network using either method.
 - [ ] Configure R2 to propogate a default route to the Internet.
 
 ### Step 2: Verify the OSPFv2 network has been established.
@@ -75,11 +75,12 @@ In this step, we will verify that the configured OSPF network was correctly impl
 
 #### 2.2 Verify OSPFv2 for R1
 - [ ] Examine the active OSPF interfaces and their assigned areas.
-- [ ] Is R1 a DR in any of its segments? Why?
+- [ ] Is R1 a DR in any of its segments? Why? (see solution for caveat!)
 - [ ] Examine the neighbor adjacency established by R1.
 - [ ] What state are the neighbor adjacencies in?
 
 #### 2.3 Verify OSPFv2 for R2
+- [ ] Before proceeding, ensure that the OSPF process has been restarted on both R1 and R2.
 - [ ] Examine the active OSPF interfaces and their assigned areas.
 - [ ] Is R2 a DR in any of its segments? Why?
 - [ ] Examine the neighbor adjacencies established by R1.
@@ -96,12 +97,13 @@ In this step, we will verify that the configured OSPF network was correctly impl
 - [ ] Configure R3 to participate in the OSPF process (there is no need to modify the OSPF process itself).
 
 #### 3.3. Verify OSPFv2 for R3
-- [ ] Examine the active OSPF interfaces and their assigned areas.
 - [ ] Examine the neighbor adjacencies established by R3.
 
+#### 3.4 Verify network connectivity 
+- [ ] Ping from User1 to any of the Loopback "networks" connected to D2.
+    - Use ```ping -c n ip-address``` to limit the ping to n attempts on Alpine Linux.
 
-
-### Step 4: Route Summarization
+### Step 4: Route Summarization (WORK IN PROGRESS)
 In this step, we will use route summarization on R3 to minimize the routes being shared.
 
 3.1 Calculate the OSPFv2 summary route
